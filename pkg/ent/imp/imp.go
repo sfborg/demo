@@ -29,8 +29,8 @@ type ImporterRPCServer struct {
 	Impl Importer
 }
 
-func (s *ImporterRPCServer) Import(args interface{}, resp *error) error {
-	*resp = s.Impl.Import(args.(string))
+func (s *ImporterRPCServer) Import(args string, resp *error) error {
+	*resp = s.Impl.Import(args)
 	return nil
 }
 
