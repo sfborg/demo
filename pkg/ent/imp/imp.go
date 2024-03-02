@@ -7,7 +7,7 @@ import (
 )
 
 type Importer interface {
-	Import() error
+	Import(string) error
 }
 
 // Here is an implementation that talks over RPC
@@ -18,6 +18,10 @@ func (g *ImporterRPC) Import() error {
 	return g.client.Call("Plugin.Import", new(interface{}), &resp)
 }
 
+func (g *ImporterRPC) Client() *rpc.Client {
+	return g.client
+}
+
 // Here is the RPC server that ImporterRPC talks to, conforming to
 // the requirements of net/rpc
 type ImporterRPCServer struct {
@@ -26,7 +30,7 @@ type ImporterRPCServer struct {
 }
 
 func (s *ImporterRPCServer) Import(args interface{}, resp *error) error {
-	*resp = s.Impl.Import()
+	*resp = s.Impl.Import(args.(string))
 	return nil
 }
 

@@ -71,10 +71,15 @@ to quickly create a Cobra application.`,
 			os.Exit(1)
 		}
 
+		if len(args) < 1 {
+			slog.Error("No file to import")
+			os.Exit(1)
+		}
+
 		// We should have a Greeter now! This feels like a normal interface
 		// implementation but is in fact over an RPC connection.
 		importer := raw.(imp.Importer)
-		err = importer.Import()
+		err = importer.Import(args[0])
 		if err != nil {
 			slog.Error("Error", "error", err)
 		}
