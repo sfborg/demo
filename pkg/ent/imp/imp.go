@@ -13,13 +13,13 @@ type Importer interface {
 // Here is an implementation that talks over RPC
 type ImporterRPC struct{ client *rpc.Client }
 
-func (g *ImporterRPC) Import() error {
+func (im *ImporterRPC) Import(s string) error {
 	var resp error
-	return g.client.Call("Plugin.Import", new(interface{}), &resp)
+	return im.client.Call("Plugin.Import", s, &resp)
 }
 
-func (g *ImporterRPC) Client() *rpc.Client {
-	return g.client
+func (im *ImporterRPC) Client() *rpc.Client {
+	return im.client
 }
 
 // Here is the RPC server that ImporterRPC talks to, conforming to
